@@ -1,0 +1,7 @@
+package vcron;
+
+message Message {
+	optional string type = 1;
+	optional string name = 2;
+	optional string command = 3;
+}
