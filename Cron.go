@@ -1,38 +1,27 @@
 package vcron
 
 import (
+	"github.com/gorhill/cronexpr"
 	"time"
 )
 
 type Cron struct {
-	Listeners map[string]chan string
-	Exps      map[string]string
-	Commands  map[string]string
+	Expression *cronexpr.Expression
 }
 
-func (cron *Cron) Run() {
-	for {
-		go func() {
-			for key, value := range cron.Listeners {
-				value <- cron.Commands[key]
-			}
-		}()
-
-		time.Sleep(time.Second)
-	}
+func (cron *Cron) SetExpression(value string) {
+	cron.Expression = cronexpr.MustParse(value)
 }
 
-func (cron *Cron) Add(name string, exp string, command string) {
-	cron.Listeners[name] = make(chan string)
-	cron.Exps[name] = exp
-	cron.Commands[name] = command
+func (cron *Cron) GetNextTimer() *time.Timer {
+	next := cron.Expression.Next(time.Now())
+	return time.NewTimer(next.Sub(time.Now()))
 }
 
-func NewCron() *Cron {
+func NewCron(value string) *Cron {
 	cron := &Cron{}
-	cron.Listeners = make(map[string]chan string)
-	cron.Commands = make(map[string]string)
-	cron.Exps = make(map[string]string)
+
+	cron.SetExpression(value)
 
 	return cron
 }
