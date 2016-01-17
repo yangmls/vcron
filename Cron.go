@@ -1,7 +1,7 @@
 package vcron
 
 import (
-	"github.com/gorhill/cronexpr"
+	"github.com/yangmls/vcron/cronexpr"
 	"time"
 )
 
@@ -14,8 +14,9 @@ func (cron *Cron) SetExpression(value string) {
 }
 
 func (cron *Cron) GetNextTimer() *time.Timer {
-	next := cron.Expression.Next(time.Now())
-	return time.NewTimer(next.Sub(time.Now()))
+	now := time.Now()
+	next := cron.Expression.Next(now)
+	return time.NewTimer(next.Sub(now))
 }
 
 func NewCron(value string) *Cron {
