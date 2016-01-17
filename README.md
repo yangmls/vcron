@@ -11,6 +11,8 @@ VCron is a replacement of linux cron, it is designed for distributed system and 
 
 * Simple and no database dependency
 
+* Use protobuf to send and receive data, it is much smaller than json
+
 * Use json to store config asynchronously
 
 * High performance by golang such as goroutine
