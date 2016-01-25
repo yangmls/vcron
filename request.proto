@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package vcron;
+
+message Request {
+	string type = 1;
+	repeated Job jobs = 2;
+}
+
+message Job {
+	string command = 1;
+	string expression = 2;
+}
