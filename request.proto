@@ -5,6 +5,7 @@ package vcron;
 message Request {
 	string type = 1;
 	repeated Job jobs = 2;
+	string Path = 3;
 }
 
 message Job {
